@@ -55,4 +55,5 @@ variable "rule_notification_settings" {
     mute_timings    = optional(list(string))
     repeat_interval = optional(string)
   }))
+  default = null
 }
