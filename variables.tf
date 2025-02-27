@@ -44,3 +44,15 @@ variable "disable_provenance" {
   type        = bool
   default     = false
 }
+
+variable "rule_notification_settings" {
+  description = "Notification settings for each rule. If specified, it overrides the notification policies."
+  type = map(object({
+    contact_point   = string
+    group_by        = optional(list(string))
+    group_interval  = optional(string)
+    group_wait      = optional(string)
+    mute_timings    = optional(list(string))
+    repeat_interval = optional(string)
+  }))
+}

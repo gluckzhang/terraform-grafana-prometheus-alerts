@@ -131,6 +131,20 @@ resource "grafana_rule_group" "this" {
           "type"          = "threshold"
         })
       }
+
+      ## Notification settings
+      dynamic "notification_settings" {
+        for_each = var.rule_notification_settings != null ? [var.rule_notification_settings] : []
+
+        content {
+          contact_point   = notification_settings.value.contact_point
+          group_by        = notification_settings.value.group_by
+          group_interval  = notification_settings.value.group_interval
+          group_wait      = notification_settings.value.group_wait
+          mute_timings    = notification_settings.value.mute_timings
+          repeat_interval = notification_settings.value.repeat_interval
+        }
+      }
     }
   }
 }
