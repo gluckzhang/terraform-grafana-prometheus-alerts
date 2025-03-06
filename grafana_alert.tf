@@ -21,7 +21,7 @@ resource "grafana_rule_group" "this" {
     content {
       name      = rule.value.alert
       for       = try(rule.value.for, null)
-      condition = "ALERTCONDITION"
+      condition = "QUERY_RESULT"
 
       annotations = {
         for k, v in merge(rule.value.annotations, try(var.overrides[rule.value.alert].annotations, {})) :
