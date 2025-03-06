@@ -91,47 +91,6 @@ resource "grafana_rule_group" "this" {
         })
       }
 
-      ## Threshold
-      data {
-        ref_id = "ALERTCONDITION"
-        relative_time_range {
-          from = 600
-          to   = 0
-        }
-        datasource_uid = "__expr__"
-        model = jsonencode({
-          "conditions" = [
-            {
-              "evaluator" = {
-                "params" = [coalesce(try(var.overrides[rule.value.alert].alert_threshold, null), 0)]
-                "type"   = "gt"
-              }
-              "operator" = {
-                "type" = "and"
-              }
-              "query" = {
-                "params" = ["QUERY_RESULT"]
-              }
-              "reducer" = {
-                "params" = []
-                "type"   = "last"
-              }
-              "type" = "query"
-            },
-          ]
-          "datasource" = {
-            "type" = "__expr__"
-            "uid"  = "__expr__"
-          }
-          "expression"    = "QUERY_RESULT"
-          "hide"          = false
-          "intervalMs"    = 1000
-          "maxDataPoints" = 43200
-          "refId"         = "ALERTCONDITION"
-          "type"          = "threshold"
-        })
-      }
-
       ## Notification settings
       dynamic "notification_settings" {
         for_each = var.rule_notification_settings != null ? [var.rule_notification_settings] : []
