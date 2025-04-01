@@ -36,7 +36,7 @@ resource "grafana_rule_group" "this" {
       data {
         ref_id = "QUERY"
         relative_time_range {
-          from = 600
+          from = coalesce(try(var.overrides[rule.value.alert].relative_time_range, null), var.default_relative_time_range)
           to   = 0
         }
         datasource_uid = var.datasource_uid
@@ -53,7 +53,7 @@ resource "grafana_rule_group" "this" {
       data {
         ref_id = "QUERY_RESULT"
         relative_time_range {
-          from = 600
+          from = coalesce(try(var.overrides[rule.value.alert].relative_time_range, null), var.default_relative_time_range)
           to   = 0
         }
         datasource_uid = "__expr__"
@@ -95,7 +95,7 @@ resource "grafana_rule_group" "this" {
       data {
         ref_id = "ALERTCONDITION"
         relative_time_range {
-          from = 600
+          from = coalesce(try(var.overrides[rule.value.alert].relative_time_range, null), var.default_relative_time_range)
           to   = 0
         }
         datasource_uid = "__expr__"

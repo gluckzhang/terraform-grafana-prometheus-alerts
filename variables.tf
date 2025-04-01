@@ -16,15 +16,22 @@ variable "datasource_uid" {
 variable "overrides" {
   description = "Overrides per Alert rule"
   type = map(object({
-    alert_threshold = optional(number)
-    exec_err_state  = optional(string)
-    expr            = optional(string)
-    is_paused       = optional(bool)
-    no_data_state   = optional(string)
-    labels          = optional(map(string))
-    annotations     = optional(map(string))
+    relative_time_range = optional(number)
+    alert_threshold     = optional(number)
+    exec_err_state      = optional(string)
+    expr                = optional(string)
+    is_paused           = optional(bool)
+    no_data_state       = optional(string)
+    labels              = optional(map(string))
+    annotations         = optional(map(string))
   }))
   default = {}
+}
+
+variable "default_relative_time_range" {
+  description = "The time range, relative to when the query is executed in seconds"
+  type        = number
+  default     = 300
 }
 
 variable "default_evaluation_interval_duration" {
