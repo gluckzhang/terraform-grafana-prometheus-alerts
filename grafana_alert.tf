@@ -134,7 +134,7 @@ resource "grafana_rule_group" "this" {
 
       ## Notification settings
       dynamic "notification_settings" {
-        for_each = var.rule_notification_settings != null ? [var.rule_notification_settings] : []
+        for_each = try([coalesce(try(var.overrides[rule.value.alert].rule_notification_settings, null), var.rule_notification_settings)], [])
 
         content {
           contact_point   = notification_settings.value.contact_point
